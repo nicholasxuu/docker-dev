@@ -1,10 +1,18 @@
 version: "3"
 
 services:
+    # elasticsearch:
+    #     image: kindjeff/elasticsearch-ik:latest
+    #     ports:
+    #         - "9200:9200"
     elasticsearch:
-        image: kindjeff/elasticsearch-ik:latest
+        image: elasticsearch:7.9.3
+        container_name: db-elasticsearch
         ports:
             - "9200:9200"
+            - "9300:9300"
+        environment:
+            - "discovery.type=single-node"
     # web:
     #     image: nginx:latest
     #     ports:
@@ -23,42 +31,42 @@ services:
     #         - application_data
     #     volumes:
     #         - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-    # mysql:
-    #     # build: ./dockerfiles/mysql
-    #     image: mysql:5.7
-    #     container_name: db-mysql
-    #     environment:
-    #         - MYSQL_ROOT_PASSWORD=toor333666
-    #         - MYSQL_DATABASE=base
-    #         - MYSQL_USER=dbuser
-    #         - MYSQL_PASSWORD=topsecret
-    #         - MYSQL_PORT=3306
-    #     ports:
-    #         - "3306:3306"
+    mysql:
+        # build: ./dockerfiles/mysql
+        image: mysql:5.7
+        container_name: db-mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=toor333666
+            - MYSQL_DATABASE=base
+            - MYSQL_USER=dbuser
+            - MYSQL_PASSWORD=topsecret
+            - MYSQL_PORT=3306
+        ports:
+            - "3306:3306"
     #     volumes:
     #         - ./data/mysql_db:/var/lib/mysql
-    # redis:
-    #     image: redis:4
-    #     container_name: cache-redis
-    #     # command: redis-server --requirepass redispassword
-    #     ports:
-    #         - "6379:6379"
+    redis:
+        image: redis:4
+        container_name: cache-redis
+        # command: redis-server --requirepass redispassword
+        ports:
+            - "6379:6379"
     # redis_auth:
     #     image: redis:4
     #     container_name: cache-redis-auth
     #     command: redis-server --requirepass redispassword
     #     ports:
     #         - "6380:6379"
-    # rabbitmq:
-    #     image: "bitnami/rabbitmq:latest"
-    #     container_name: mq-rabbitmq
-    #     ports:
-    #         - "15672:15672"
-    #         - "25672:25672"
-    #         - "5672:5672"
-    #     environment:
-    #         RABBITMQ_USERNAME: "guest1"
-    #         RABBITMQ_PASSWORD: "guest1"
+    rabbitmq:
+        image: "bitnami/rabbitmq:latest"
+        container_name: mq-rabbitmq
+        ports:
+            - "15672:15672"
+            - "25672:25672"
+            - "5672:5672"
+        environment:
+            RABBITMQ_USERNAME: "guest1"
+            RABBITMQ_PASSWORD: "guest1"
     # mongodb:
     #     image: 'bitnami/mongodb'
     #     container_name: db-mongo
