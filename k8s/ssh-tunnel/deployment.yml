@@ -18,14 +18,11 @@ spec:
         tier: tunnel
     spec:
       containers:
-        - envFrom:
-            - secretRef:
-                name: tunnel-secrets
-          image: linuxserver/openssh-server:amd64-latest
+        - image: nicholasxuu/openssh-server
           imagePullPolicy: IfNotPresent
           name: app
           ports:
-            - containerPort: 2222
+            - containerPort: 22
               protocol: TCP
           resources:
             limits:

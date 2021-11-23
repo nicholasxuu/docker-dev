@@ -2,3 +2,4 @@ data/
 log/
 
 secrets.yml
+.DS_Store
